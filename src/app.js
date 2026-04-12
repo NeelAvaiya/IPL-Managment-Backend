@@ -15,19 +15,37 @@ const storage = multer.diskStorage({
     cb(null, 'public/uploads')
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
     const ext = path.extname(file.originalname)
     cb(null, file.fieldname + '-' + uniqueSuffix + ext)
   }
 })
 
-const upload = multer({storage});
+// const storage = multer.memoryStorage();
 
-app.post("/upload", upload.single("file"), (req, res) => {
-    console.log(req.file);
+const upload = multer({
+    storage,
+    limits:{
+    fileSize:1024 * 1024 * 2
+},
+fileFilter:(req, file, cb) => {
+    const allowed = ["image/png", "image/jpeg", "application/pdf"]
+    if(allowed.includes(file.mimetype)){
+        cb(null, true)
+    } else{
+        cb(new Error("File type not supported") ,false)
+    }
+}
+});
 
-    ApiResponse.ok(res, "File uploaded")
-})
+// app.post("/upload", (req, res) => {
+//     upload.single("file")(req, res, (err)=>{
+//         if(err?.code === "LIMIT_FILE_SIZE"){
+//            return res.send("File to large")
+//         }
+//         res.send("upload")
+//     })
+// })
 
 
 app.use("/api/auth", authRoute);
