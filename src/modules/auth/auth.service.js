@@ -1,4 +1,5 @@
 import { sendVerificationEmail } from "../../common/config/email.js";
+import imagekit from "../../common/config/imagekit.js";
 import ApiError from "../../common/utils/api-error.js";
 import {
   generateAccessToken,
@@ -7,6 +8,8 @@ import {
   verifyRefreshToken,
 } from "../../common/utils/jwt.utils.js";
 import User from "./auth.model.js";
+import fs from "node:fs";
+import path from "path";
 
 const hashToken = (token) =>
   crypto.createHash("sha256").update(token).digest("hex");
@@ -126,4 +129,38 @@ const getMe = async (userId) => {
   return user;
 };
 
-export { register, login, refresh, logout, forgotPassword, getMe, verifyEmail };
+const avatarUpload = async (userId, file) => {
+  try {
+    const filestrim = fs.createReadStream(file.path);
+    const uploadResponse = await imagekit.files.upload({
+      file:filestrim,
+      fileName:file.fileName,
+      folder:"/user-avatars"
+    })
+
+    await User.findByIdAndUpdate(
+      userId,
+      {avatar:uploadResponse.url},
+      {new:true}
+    );
+
+    fs.unlinkSync(file.path);
+
+    return {
+      url: uploadResponse.url,
+      fileId: uploadResponse.fileId
+    }
+
+  } catch (error) {
+    try {
+      if(file.path && fs.existsSync(file.path)){
+        fs.unlinkSync(file.path);
+      }
+    } catch (error) {
+      console.error("Error deleting temp file",error);
+    }
+    throw error;
+  }
+}
+
+export { register, login, refresh, logout, forgotPassword, getMe, verifyEmail, avatarUpload };
