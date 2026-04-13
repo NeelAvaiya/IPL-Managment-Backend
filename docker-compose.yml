@@ -20,7 +20,3 @@ volumes:
   mongo_data:
 
 
-https://www.docker.com/products/docker-desktop/
-
-
-DATABASE_URL=postgres://<username>:<pass>@localhost:5432/<db_name>
