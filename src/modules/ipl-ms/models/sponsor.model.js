@@ -1,11 +1,11 @@
 import { required } from "joi";
 import mongoose from "mongoose";
 
-const ownerSchema = new mongoose.Schema(
+const sponsorSchema = new mongoose.Schema(
     {
         name:{
             type:String,
-            required:[true, "owner name is required"],
+            required:[true, "sponsor name is required"],
             trim: true,
             minlength:2,
             maxlength:100,
@@ -20,4 +20,4 @@ const ownerSchema = new mongoose.Schema(
     } ,{timestamps: true}
 );
 
-export default mongoose.model("Owner", ownerSchema)
+export default mongoose.model("Sponsor", sponsorSchema)
