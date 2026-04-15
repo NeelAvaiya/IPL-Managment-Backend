@@ -3,16 +3,16 @@ import * as controller from "../controllers/owner.controller.js"
 const router = Router();
 
 // Create a new owner
-router.post("/", )
+router.post("/", controller.createOwner)
 
 // Get all owners
-router.get("/")
+router.get("/", controller.getAllOwners)
 
 // get owner by id
-router.get("/:id")
+router.get("/:id", controller.getOwnerById)
 
 // update owner
-router.put("/:id")
+router.put("/:id", controller.updateOwner)
 
 // delete owner
-router.delete("/:id")
+router.delete("/:id", controller.deleteOwner)
