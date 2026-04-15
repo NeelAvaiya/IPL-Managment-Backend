@@ -12,7 +12,7 @@ const getAllOwners = async()=>{
     return owners;
 }
 
-const getOwnerById = async() =>{
+const getOwnerById = async(id) =>{
     const owner = await Owner.findById(id);
 
     if(!owner){

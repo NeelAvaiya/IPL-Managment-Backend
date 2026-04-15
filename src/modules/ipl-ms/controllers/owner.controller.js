@@ -19,7 +19,7 @@ const getOwnerById = async(req, res)=>{
 
 const updateOwner = async(req, res)=>{
     const updatedOwner = await ownerService.updateOwner(req.params.id, req.body);
-    ApiResponse.ok(res, "Owner updated successfully", owner)
+    ApiResponse.ok(res, "Owner updated successfully", updatedOwner)
 };
 
 const deleteOwner = async(req, res)=>{
