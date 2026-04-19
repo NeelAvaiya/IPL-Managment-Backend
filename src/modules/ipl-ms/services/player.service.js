@@ -13,7 +13,7 @@ const transferPlayer = async(playerId, newTeamId) =>{
         playerId,
         {teamId:newTeamId},
         {new: true, runValidators:true}
-    ).populate("teamId", "name")
+    ).populate("teamId", "name") 
 
     if(!player){
         throw ApiError.notfound("Player not found")
