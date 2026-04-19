@@ -5,6 +5,7 @@ import multer from "multer";
 import ApiResponse from "./common/utils/api-response.js";
 import path from "path";
 import ownerRoutes from "./modules/ipl-ms/routes/owner.route.js"
+import playerRoutes from "./modules/ipl-ms/routes/player.route.js"
 
 const app = express();
 app.use(express.json());
@@ -13,5 +14,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoute);
 app.use("/api/owners", ownerRoutes)
+app.use("/api/player", playerRoutes);
+
 
 export default app;
