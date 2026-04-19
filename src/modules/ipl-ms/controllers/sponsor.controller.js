@@ -2,7 +2,8 @@ import * as sponserService from "../services/sponsor.service.js";
 import ApiResponse from "../../../common/utils/api-response.js";
 
 const createSponsor = async(req, res) => {
-    const sponsor = await sponserService.creteSponsor(req.body);
+    const { name, company } = req.body;
+    const sponsor = await sponserService.creteSponsor(name, company);
     ApiResponse.created(res, "sponsor created successfully", sponsor);
 }
 

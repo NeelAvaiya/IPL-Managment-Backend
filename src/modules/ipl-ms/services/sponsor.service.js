@@ -1,4 +1,4 @@
-import ApiError from "../../../common/utils/api-error";
+import ApiError from "../../../common/utils/api-error.js";
 import Sponsor from "../models/sponsor.model.js";
 
 const creteSponsor = async(name, company) => {
@@ -13,7 +13,7 @@ const getAllSponsor = async() => {
 
 const getSponsorById = async(id) => {
     const sponsor = await Sponsor.findById(id);
-    if(sponsor){
+    if(!sponsor){
         throw ApiError.notfound("Sponsor not found");
     }
     return sponsor;
