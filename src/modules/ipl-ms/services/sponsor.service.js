@@ -32,7 +32,7 @@ const updateSponsor = async(id, {name, company}) => {
     return sponsor;
 }
 
-const deletesponsor = async(id) => {
+const deleteSponsor = async(id) => {
     const sponsor = await Sponsor.findByIdAndDelete(id);
 
     if(!sponsor){
@@ -46,5 +46,5 @@ export{
     getAllSponsor,
     getSponsorById,
     updateSponsor,
-    deletesponsor
+    deleteSponsor
 }
